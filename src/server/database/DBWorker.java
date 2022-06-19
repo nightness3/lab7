@@ -136,6 +136,15 @@ public class DBWorker {
 
     }
 
+    public synchronized void clearAll() {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(Statements.clearAll.getStatement());
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            System.out.println("Ошибка при удалении всех элементов");
+        }
+    }
+
     private synchronized void setVehicleToStatement (PreparedStatement stmt, Vehicle v) throws SQLException {
         Integer newId = generateId();
         if (newId == null) return;

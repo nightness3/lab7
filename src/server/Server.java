@@ -62,6 +62,9 @@ public class Server {
             if (scan.equals("exit")) {
                 System.out.println("Выключаем сервер");
                 return;
+            } else if (scan.equals("clear")) {
+                dbWorker.clearAll();
+                cm.clearAll();
             }
         }
 

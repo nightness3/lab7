@@ -34,7 +34,11 @@ public class CollectionManager {
     }
 
     public synchronized void clear (String username) {
-        vehicles.stream().filter(v -> v.getUsername().equals(username)).forEach(v -> remove(v));
+        vehicles.stream().filter(v -> v.getUsername().equals(username)).forEach(v -> vehicles.remove(v));
+    }
+
+    public synchronized void clearAll() {
+        vehicles.clear();
     }
 
 }

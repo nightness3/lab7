@@ -24,6 +24,8 @@ public enum Statements {
 
     clearAllByUser("DELETE FROM s335088vehicle WHERE username = ?"),
 
+    clearAll("DELETE FROM s335088vehicle"),
+
     takeAll("SELECT * FROM s335088vehicle");
 
     private final String statement;
