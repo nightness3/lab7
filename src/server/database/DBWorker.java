@@ -17,7 +17,7 @@ public class DBWorker {
         this.hashPassword = new HashPassword(hashAlgorithm);
     }
 
-    public ResultSet getCollection() {
+    public synchronized ResultSet getCollection() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(Statements.takeAll.getStatement());
             return preparedStatement.executeQuery();
@@ -27,7 +27,7 @@ public class DBWorker {
         }
     }
 
-    private Integer generateId() {
+    private synchronized Integer generateId() {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(Statements.generateId.getStatement());
@@ -41,7 +41,7 @@ public class DBWorker {
         }
     }
 
-    public boolean loginUser(User user) {
+    public synchronized boolean loginUser(User user) {
         try {
             PreparedStatement checkStatement = connection.prepareStatement(Statements.checkUser.getStatement());
             checkStatement.setString(1, user.getUsername());
@@ -53,7 +53,7 @@ public class DBWorker {
         }
     }
 
-    public boolean addUser(User user) {
+    public synchronized boolean addUser(User user) {
         try {
             PreparedStatement insertStatement = connection.prepareStatement(Statements.addUserWithPassword.getStatement());
             insertStatement.setString(1, user.getUsername());
@@ -77,7 +77,7 @@ public class DBWorker {
         }
     }
 
-    public String updateById(Vehicle v, int id, String username) {
+    public synchronized String updateById(Vehicle v, int id, String username) {
         try {
             String status = getById(id, username);
             if (!status.equals("OK")) return status;
@@ -91,7 +91,7 @@ public class DBWorker {
         }
     }
 
-    public String removeById(int id, String username) {
+    public synchronized String removeById(int id, String username) {
         try {
             String status = getById(id, username);
             if (!status.equals("OK")) return status;
@@ -105,7 +105,7 @@ public class DBWorker {
         }
     }
 
-    public String getById(int id, String username) {
+    public synchronized String getById(int id, String username) {
         PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement(Statements.getById.getStatement());
@@ -124,7 +124,7 @@ public class DBWorker {
         }
     }
 
-    public String clear(String username) {
+    public synchronized String clear(String username) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(Statements.clearAllByUser.getStatement());
             preparedStatement.setString(1, username);
@@ -136,7 +136,7 @@ public class DBWorker {
 
     }
 
-    private void setVehicleToStatement (PreparedStatement stmt, Vehicle v) throws SQLException {
+    private synchronized void setVehicleToStatement (PreparedStatement stmt, Vehicle v) throws SQLException {
         Integer newId = generateId();
         if (newId == null) return;
         v.setId(newId.longValue());
@@ -151,7 +151,7 @@ public class DBWorker {
         stmt.setString(9, v.getUsername());
     }
 
-    private void setUpdatedVehicleToStatement(PreparedStatement stmt, Vehicle v, int id) throws SQLException {
+    private synchronized void setUpdatedVehicleToStatement(PreparedStatement stmt, Vehicle v, int id) throws SQLException {
         stmt.setString(1, v.getName());
         stmt.setInt(2, v.getCoordinates().getX().intValue());
         stmt.setInt(3, (int) v.getCoordinates().getY());

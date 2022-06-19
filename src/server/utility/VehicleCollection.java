@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class VehicleCollection {
 
-    public static Set<Vehicle> getCollection(DBWorker dbWorker) {
+    public synchronized static Set<Vehicle> getCollection(DBWorker dbWorker) {
         Set<Vehicle> v = new LinkedHashSet<>();
         try {
             ResultSet data = dbWorker.getCollection();
