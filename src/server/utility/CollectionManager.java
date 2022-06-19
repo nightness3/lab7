@@ -21,11 +21,11 @@ public class CollectionManager {
         vehicles = VehicleCollection.getCollection(dbWorker);
     }
 
-    public void add (Vehicle v) {
+    public synchronized void add (Vehicle v) {
         vehicles.add(v);
     }
 
-    public boolean remove (Vehicle v) {
+    public synchronized boolean remove (Vehicle v) {
         return vehicles.remove(v);
     }
 
@@ -33,7 +33,7 @@ public class CollectionManager {
         return vehicles;
     }
 
-    public void clear (String username) {
+    public synchronized void clear (String username) {
         vehicles.stream().filter(v -> v.getUsername().equals(username)).forEach(v -> remove(v));
     }
 
