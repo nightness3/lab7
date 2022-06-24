@@ -19,6 +19,5 @@ public class RecieverLoop implements Runnable {
                 System.out.println("Ошибка при получении данных от клиента");
             }
         }
-        reciever.getForkJoinPool().shutdown();
     }
 }

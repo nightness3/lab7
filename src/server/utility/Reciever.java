@@ -1,7 +1,6 @@
 package server.utility;
 
 import common.Request;
-import common.Serializer;
 import server.database.DBWorker;
 
 import java.io.IOException;
@@ -12,7 +11,6 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
 
 public class Reciever {
@@ -59,7 +57,4 @@ public class Reciever {
         return null;
     }
 
-    public ForkJoinPool getForkJoinPool() {
-        return forkJoinPool;
-    }
 }
